@@ -115,27 +115,88 @@ node* reverseRecursive(node* &head)
 
     return newhead;
 }
+void makecycle(node* &head,int pos)
+{
+    node* temp=head;
+    node* startNode;
+    int count=1;
+    while(temp->next!=NULL)
+    {
+        if(count==pos)
+        {
+            startNode=temp;
+        }
+        temp=temp->next;
+        count++;
+    }
+    //when comes out of this loop temp will be at last node
+    temp->next=startNode;
+}
+bool detectcycle(node* &head)
+{
+    node* slow=head;
+    node* fast=head;
+    while(fast!=NULL && fast->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+        if(fast==slow)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+void removecycle(node* &head)
+{   
+    node* slow=head;
+    node* fast=head;
+    do
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+
+    }while(slow!=fast);
+    fast=head;
+    while(slow->next!=fast->next)
+    {
+        slow=slow->next;
+        fast=fast->next;
+    }
+    slow->next=NULL;
+
+}
 int main() 
 {
     node* head=NULL;//head is the object of the class
-    insertAtTail(head,2);
-    insertAtTail(head,1);
-    insertAtTail(head,3);
-    insertAtTail(head,5);
-    insertAtTail(head,8);
-    insertAtHead(head,77);
-    display(head);
-    cout<<search(head,0);
-    cout<<endl;
-    cout<<search(head,2)<<endl;
-    deletion(head,3);
-    display(head);
-    deleteAtHead(head);
-    display(head);
-    node* newhead=reverseRecursive(head);
-    display(newhead);
+    // insertAtTail(head,2);
+    // insertAtTail(head,1);
+    // insertAtTail(head,3);
+    // insertAtTail(head,5);
+    // insertAtTail(head,8);
+    // insertAtHead(head,77);
+    // display(head);
+    // cout<<search(head,0);
+    // cout<<endl;
+    // cout<<search(head,2)<<endl;
+    // deletion(head,3);
+    // display(head);
+    // deleteAtHead(head);
+    // display(head);
+    // node* newhead=reverseRecursive(head);
+    // display(newhead);
     // node* newHead=reverseRecursive(head);
     // display(newHead);
-    //n
+    insertAtTail(head,1);
+    insertAtTail(head,2);
+    insertAtTail(head,3);
+    insertAtTail(head,4);
+    insertAtTail(head,5);
+    insertAtTail(head,6);
+    makecycle(head,3);
+    //display(head);
+    cout<<detectcycle(head)<<endl;
+    removecycle(head);
+    cout<<detectcycle(head);
     return 0;
 }
