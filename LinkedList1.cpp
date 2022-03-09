@@ -86,6 +86,35 @@ void deletion(node* &head,int valTOdelete)
     temp->next=temp->next->next;
     delete to_delete;
 }    
+//iterative way of reversing a LL
+node* ReverseLL(node* &head)
+{
+    node* previousPTR=NULL;
+    node* currentPTR=head;
+    node* nextPTR;
+    while(currentPTR!=NULL)
+    {
+        nextPTR=currentPTR->next;
+        currentPTR->next=previousPTR;
+        
+        previousPTR=currentPTR;
+        currentPTR=nextPTR;
+    }
+    return previousPTR;//bcoz it will be our new head
+}
+//recursive way
+node* reverseRecursive(node* &head)
+{   
+    if(head==NULL || head->next==NULL)//if empty ll or only 1 node is present
+    {
+        return head;
+    }
+    node* newhead=reverseRecursive(head->next);
+    head->next->next=head;
+    head->next=NULL;
+
+    return newhead;
+}
 int main() 
 {
     node* head=NULL;//head is the object of the class
@@ -103,5 +132,9 @@ int main()
     display(head);
     deleteAtHead(head);
     display(head);
+    node* newhead=reverseRecursive(head);
+    display(newhead);
+    // node* newHead=reverseRecursive(head);
+    // display(newHead);
     return 0;
 }
